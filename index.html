@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>耿耿聊天室</title>
+</head>
+<body>
+  <div id="login">
+    使用者名稱:
+    <input 
+      id="input-login" 
+      type="text" 
+      placeholder="輸入暱稱"
+      onkeydown="return loginEnter(event)"
+    >
+    <button onclick="sendLogin()">登錄</button>
+  </div>
+  <div class="chatroom">
+    <div class="chatroom-info">
+      <div class="chatroom-title">
+        <div id="mine-avatar"></div>
+        <div class="chatroom-title-info">
+          <div id="mine-nickname"></div>
+          <div class="client-count">
+            <div id="channel"></div>
+            <div id="count"></div>
+          </div>
+        </div>
+      </div>
+      <div id="chatroom-box" class="chatroom-box"></div>
+      <div class="send">
+        <input 
+          id="input-text" 
+          type="text" 
+          placeholder="開始聊天"
+          value=""
+        >
+        <div id="send"></div>
+      </div>
+    </div>
+    <!-- <div class="announcement-info">
+      <div>目前未完成項目:</div>
+      <div id="announcement"></div>
+    </div> -->
+  </div>
+  <script src="./ws.js"></script>
+  <script>
+    let announcement = document.getElementById('announcement')
+    let ann = []
+
+    ann = [
+      {annItem: '廣播, 通知, 公告位置調整'},
+      {annItem: '聊天機器人'},
+      {annItem: '切換頭像'},
+      {annItem: '表情, 貼圖片'},
+    ]
+
+    let content = ''
+    for(let i = 0; i < ann.length; i++) {
+      content += `<div>
+                    <div>${i + 1}.${ann[i].annItem}</div>
+                  </div>`
+    }
+    announcement.innerHTML = content
+  </script>
+</body>
+<style>
+  .chatroom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .chatroom-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .chatroom-title-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+  }
+
+  .mine-avatar-box {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .mine-avatar-img {
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    border-radius: 50%;
+  }
+
+  .chatroom-box {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 500px;
+    color: #fff;
+    border: 1px solid #000;
+    background: #444;
+    padding: 1rem;
+    -ms-overflow-style: none;
+    overflow: -moz-hidden-unscrollable;
+    overflow: auto;
+  }
+
+  .chatroom-box::-webkit-scrollbar {
+    display: none;
+  }
+
+  .self {
+    flex-flow: row-reverse;
+  }
+
+  .init-message-position {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .message-box {
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
+    min-width: 25px;
+    padding: 0.3rem;
+    margin: 0.2rem 0;
+    color: #e1e1e1;
+    background: rgb(8, 8, 8);
+    border-radius: 0px 10px 10px 10px;
+  }
+
+  .box-self {
+    color: #333;
+    background: rgb(193, 243, 146);
+    border-radius: 10px 0px 10px 10px;
+  }
+
+  .message-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .msg-style {
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+    word-break: break-all;
+  }
+
+  .info-time {
+    display: flex;
+    align-items: flex-end;
+    font-size: 12px;
+    margin: 0 0.2rem;
+    color: #ddd;
+  }
+
+  .send {
+    display: flex;
+    background: #444;
+  }
+
+  .send input{
+    width: 100%;
+    height: 2.5rem;
+    border: none;
+    color: #e1e1e1;
+    background-color: #444;
+    padding: 0 0.5rem;
+  }
+
+  .announcement-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 500px;
+    margin-left: 10px;
+  }
+
+  /** no-self **/
+  .no-self-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .no-self-msg {
+    display: flex;
+  }
+
+  .avatar-box {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.3rem;
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    border-radius: 50%;
+  }
+
+  .info-name {
+    font-size: 14px;
+    color: #e1e1e1;
+  }
+</style>
+</html>
